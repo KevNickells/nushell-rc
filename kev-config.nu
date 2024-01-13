@@ -1,5 +1,7 @@
 # this file needs to be referenced in ~/.config/nushell/config.nu, eg source ~/.nu_config.nu
 
+source ~/.oh-my-posh.nu;
+
 # TODO - functions in a separate file
 # TODO https://www.nushell.sh/book/coloring_and_theming.html - styling shell
 
@@ -114,3 +116,4 @@ alias tdu = ultralist prioritize
 
 # list by project
 alias tdp = list_by_project
+
