@@ -13,6 +13,7 @@ def search_history [search_for] {
   history | get 'command' | where ($it | str contains $search_for)
 }
 
+
 def command_complete [] {
   notify-send "Command exited"
 }
@@ -43,9 +44,30 @@ def git_add_commit_push [message: string] {
   git push
 }
 
+def open_with_dolphin [query?: string] {
+  if ($query == null) {
+    dolphin .
+  } else {
+    dolphin $query
+  }
+}
+
 def list_by_project [project: string] {
   ultralist list | ^grep $project
 }
+
+# display devbox status on shell to make it obvious to old thicky here
+def devbox [original_command: string] {
+  let-env DEVBOX_ACTIVE = $"DEVBOX: ($env.PWD | path basename)"
+  ^devbox $original_command
+}
+
+# Demo of adding things to original command
+# def echo [original_command: string] {
+#   ^echo "balls"
+#   ^echo $to_echo
+# }
+
 
 # show todo on startup
 ultralist l
@@ -77,12 +99,15 @@ alias ngso = ng serve --open
 alias gb = git branch -a
 alias gc = git_add_commit_push # hoisting!
 
+
 # new to nu
 
+alias o = open_with_dolphin
 alias ts = taylor_business
 alias dcl = docker_clean
 alias dcu = docker-compose up
 alias dps = docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}'
+
 
 #notify when command is complete
 alias cmpl = command_complete
@@ -92,6 +117,11 @@ alias restart = reboot
 alias flash = vim ~/flash-card/terms.json
 alias gbr = ~/branches.sh
 
+alias nix_config = sudo nvim ~/nix-config
+alias nco = nix_config
+
+# rebuild after updating config
+alias rb = sudo nixos-rebuild switch
 
 # show todos
 alias td = ultralist list
