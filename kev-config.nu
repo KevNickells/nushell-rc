@@ -1,11 +1,22 @@
 # this file needs to be referenced in ~/.config/nushell/config.nu, eg source ~/.nu_config.nu
-
 source ~/.oh-my-posh.nu;
 
 # TODO - functions in a separate file
 # TODO https://www.nushell.sh/book/coloring_and_theming.html - styling shell
 
 $env.EDITOR = /usr/bin/nvim
+
+$env.config = {
+  hooks: {
+    pre_prompt: [{ ||
+      if (which direnv | is-empty) {
+        return
+      }
+
+      direnv export json | from json | default {} | load-env
+    }]
+  }
+}
 
 # this probably doesn't belong here
 
