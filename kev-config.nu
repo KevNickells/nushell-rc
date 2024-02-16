@@ -57,15 +57,19 @@ def list_by_project [project: string] {
 }
 
 # display devbox status on shell to make it obvious to old thicky here
-def devbox [original_command: string] {
-  let-env DEVBOX_ACTIVE = $"DEVBOX: ($env.PWD | path basename)"
+def devbox [...original_command] {
+  if ($original_command.0 == "shell") {
+    let-env DEVBOX_ACTIVE = $"DEVBOX: ($env.PWD | path basename)"
+  }
+
   ^devbox $original_command
 }
 
 # Demo of adding things to original command
-# def echo [original_command: string] {
+# def echo [...original_command: string[]] {
 #   ^echo "balls"
 #   ^echo $to_echo
+    #^echo $stuff.0
 # }
 
 
@@ -79,18 +83,14 @@ ultralist l
 alias vim = nvim
 
 # nu-specific
-alias nuconf = vim ~/.nu_config.nu
+alias nuconf = vim  ~/nushell-rc/kev-config.nu
 
 # alias update_nu = source ~/.nu_config.nu
 alias showconf = open ~/.nu_config.nu
 alias nunotes = vim ~/nu_shell_stuff/notes.nu
 
-# for angular local server with latest ssl
-
-#let-env NODE_OPTIONS = --openssl-legacy-provider;
 
 # copied from zsh config
-
 alias work = cd ~/RAP
 alias Z = exit
 alias gst = git status
