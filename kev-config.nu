@@ -7,6 +7,8 @@ source ~/.oh-my-posh.nu;
 $env.EDITOR = /usr/bin/nvim
 
 $env.config = {
+  show_banner: false,
+  # for direnv
   hooks: {
     pre_prompt: [{ ||
       if (which direnv | is-empty) {
